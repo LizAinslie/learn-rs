@@ -131,6 +131,28 @@ fn main() {
         println!("The value of number is {number}");
     }
 
+    { // loop labels
+        let mut count = 0;
+        'counting_up: loop { // name this loop counting_up <-------------\
+            println!("count = {count}"); //                              |
+            let mut remaining = 10; //                                   |
+            //                                                           |
+            loop { // <------------------------------------\             |
+                println!("remaining = {remaining}"); //    |             |
+                if remaining == 9 { //                     |             |
+                    break; // break the inner-most loop ---/             |
+                } //                                                     |
+                if count == 2 { //                                       |
+                    break 'counting_up; // break the counting_up loop ---/
+                }
+                remaining -= 1;
+            }
+
+            count += 1;
+        }
+        println!("End count = {count}");
+    }
+
     { // fibonacci example
         fn fib(n: i32) -> i32 {
             if n <= 1 {
