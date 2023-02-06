@@ -1,3 +1,6 @@
+use std::io::{self, Write};
+mod funcs;
+
 fn main() {
     // 3.1 - Variables & Mutability
     { // mutability
@@ -65,7 +68,79 @@ fn main() {
     }
 
     { // arrays
-        let arr = [1, 2, 3, 4, 5];
+        let some_arr = [1, 2, 3, 4, 5];
+        let some_other_arr: [i32; 5] = [1, 2, 3, 4, 5]; // array types: [type, length]
+        let five_threes = [3; 5]; // an array of five 3's. [value; length]
+        
+        // array index access
+        let first = some_arr[0];
+        let second = some_arr[1];
+    }
 
+    { // ask for an array index, this code should panic if index is oob
+        let a = [1, 2, 3, 4, 5];
+        print!("Please enter an array index. >4 should panic: ");
+        io::stdout().flush().unwrap();
+
+        let mut index = String::new();
+
+        io::stdin()
+            .read_line(&mut index)
+            .expect("Failed to read line");
+
+        let index: usize = index
+            .trim()
+            .parse()
+            .expect("Index entered was not a number");
+
+        let element = a[index];
+
+        println!("The value of the element at index {index} is: {element}");
+    }
+
+    funcs::entry(); // functions
+
+    // 3.5 - Control Flow
+    { // if / else
+        let number = 3;
+
+        if number < 5 {
+            println!("condition was true");
+        } else {
+            println!("condition was false");
+        }
+    }
+
+    { // else-if statements
+        let number = 6;
+
+        if number % 4 == 0 {
+            println!("number is divisible by 4");
+        } else if number % 3 == 0 {
+            println!("number is divisible by 3");
+        } else if number % 2 == 0 {
+            println!("number is divisible by 2");
+        } else {
+            println!("number is not divisible by 4, 3, or 2");
+        }
+    }
+
+    { // conditional in assignment
+        let condition = true;
+        let number = if condition { 5 } else { 6 };
+        println!("The value of number is {number}");
+    }
+
+    { // fibonacci example
+        fn fib(n: i32) -> i32 {
+            if n <= 1 {
+                return n;
+            }
+
+            fib(n - 1) + fib(n - 2)
+        }
+
+        println!("Fib(5) = {}", fib(5));
+        println!("Fib(12) = {}", fib(12));
     }
 }
